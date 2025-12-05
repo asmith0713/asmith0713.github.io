@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asmith Maramreddy | Full Stack Developer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #22d3ee;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 4px;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .bg-animation span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(99, 102, 241, 0.1);
+            animation: float 25s infinite;
+            border-radius: 50%;
+        }
+        .bg-animation span:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .bg-animation span:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 20s; }
+        .bg-animation span:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .bg-animation span:nth-child(4) { left: 40%; animation-delay: 6s; animation-duration: 30s; }
+        .bg-animation span:nth-child(5) { left: 50%; animation-delay: 8s; }
+        @keyframes float {
+            0% { bottom: -100px; transform: translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { bottom: 110%; transform: translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Navbar Overrides */
+        .navbar {
+            background: rgba(15, 23, 42, 0.9) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            padding: 1rem 0;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-link {
+            color: var(--text-secondary) !important;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent) !important;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+        }
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+        }
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            border-radius: 50%;
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            margin: 0 10px;
+            font-size: 1.2rem;
+        }
+        .social-btn:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.3);
+        }
+
+        /* General Section Styles */
+        section {
+            padding: 5rem 0;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent));
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Cards */
+        .custom-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 15px;
+            transition: all 0.3s;
+            height: 100%;
+        }
+        .custom-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .card-title {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        /* Skill Tags */
+        .skill-tag {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--text-primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            display: inline-block;
+            margin: 0.25rem;
+        }
+
+        /* Project Specifics */
+        .project-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 1.5rem;
+            border-radius: 15px 15px 0 0;
+            color: white;
+        }
+        .project-card .card-body {
+            padding: 1.5rem;
+        }
+        .project-card ul {
+            padding-left: 1.2rem;
+            color: var(--text-secondary);
+        }
+        .project-card li {
+            margin-bottom: 0.5rem;
+        }
+        .btn-project {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--accent);
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            transition: all 0.3s;
+        }
+        .btn-project:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Experience Items */
+        .experience-item {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent);
+            margin-bottom: 2rem;
+            transition: transform 0.3s;
+        }
+        .experience-item:hover {
+            transform: translateX(10px);
+        }
+
+        /* Contact Section */
+        .contact-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .contact-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            color: var(--accent);
+        }
+
+        /* Fade In Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+            background: rgba(15, 23, 42, 0.5);
+        }
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="100">
+
+    <div class="bg-animation">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#">Asmith.dev</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav gap-lg-3">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-section text-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 fade-in">
+                    <h1 class="hero-title display-4">Asmith Maramreddy</h1>
+                    <h3 class="text-secondary mb-4 h4">Full Stack Developer | Cloud Enthusiast | DevOps Explorer</h3>
+                    <p class="lead text-secondary mb-5">
+                        Final-year Computer Science student passionate about building scalable web applications. 
+                        Specialized in the MERN stack with growing expertise in AWS and DevOps practices.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="https://github.com/asmith0713" target="_blank" class="social-btn" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/asmithreddy0713" target="_blank" class="social-btn" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="mailto:asmithreddy2004@gmail.com" class="social-btn" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title fade-in">Technical Skills</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3 fade-in">
+                    <div class="custom-card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title h4">Languages</h3>
+                            <div class="mt-3">
+                                <span class="skill-tag">Java</span>
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">SQL</span>
+                                <span class="skill-tag">HTML5/CSS3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 fade-in">
+                    <div class="custom-card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title h4">Web Tech</h3>
+                            <div class="mt-3">
+                                <span class="skill-tag">React.js</span>
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">Express.js</span>
+                                <span class="skill-tag">Socket.IO</span>
+                                <span class="skill-tag">Flask</span>
+                                <span class="skill-tag">REST APIs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 fade-in">
+                    <div class="custom-card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title h4">Cloud & DevOps</h3>
+                            <div class="mt-3">
+                                <span class="skill-tag">AWS</span>
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">CI/CD</span>
+                                <span class="skill-tag">Jenkins</span>
+                                <span class="skill-tag">GitHub Actions</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 fade-in">
+                    <div class="custom-card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title h4">Tools & DBs</h3>
+                            <div class="mt-3">
+                                <span class="skill-tag">MongoDB</span>
+                                <span class="skill-tag">MySQL</span>
+                                <span class="skill-tag">Git</span>
+                                <span class="skill-tag">Linux</span>
+                                <span class="skill-tag">VS Code</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title fade-in">Featured Projects</h2>
+            <div class="row g-4">
+                <div class="col-lg-6 fade-in">
+                    <div class="custom-card project-card h-100 p-0">
+                        <div class="project-header">
+                            <h3 class="h4 mb-1">Prastha</h3>
+                            <small class="text-white-50">MERN Stack | Socket.IO | JWT | Tailwind</small>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-secondary mb-3">
+                                A hyperlocal thread hub for pop-up community coordination. Users can spin up event threads, trade gossips, and send alerts in real-time.
+                            </p>
+                            <ul>
+                                <li><strong>Features:</strong> Live thread chat, membership requests, gossip board with voting/replies, and role-based admin controls.</li>
+                                <li><strong>Tech:</strong> React, Node.js, Express, MongoDB, Socket.io for real-time updates.</li>
+                                <li><strong>Security:</strong> JWT-based authentication with protected routes for thread creators and admins.</li>
+                            </ul>
+                            <div class="mt-4">
+                                <a href="https://github.com/asmith0713/prastha-frontend" target="_blank" class="btn btn-project me-2">
+                                    <i class="fab fa-github me-2"></i>Frontend
+                                </a>
+                                <a href="https://github.com/asmith0713/prastha-backend" target="_blank" class="btn btn-project">
+                                    <i class="fab fa-github me-2"></i>Backend
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 fade-in">
+                    <div class="custom-card project-card h-100 p-0">
+                        <div class="project-header">
+                            <h3 class="h4 mb-1">RAG Chatbot</h3>
+                            <small class="text-white-50">Python | Flask | LLM | Docker</small>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>Built an AI-powered Q&A system with 95% response accuracy using RAG architecture.</li>
+                                <li>Implemented vector search for efficient document retrieval from large datasets.</li>
+                                <li>Processed 1000+ documents with sub-2-second response time.</li>
+                                <li>Containerized application using Docker for consistent deployment.</li>
+                            </ul>
+                            <div class="mt-4">
+                                <a href="https://github.com/asmith0713/DomainChatbotForSMEs" target="_blank" class="btn btn-project">
+                                    <i class="fab fa-github me-2"></i>GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 fade-in">
+                    <div class="custom-card project-card h-100 p-0">
+                        <div class="project-header">
+                            <h3 class="h4 mb-1">ImageVault</h3>
+                            <small class="text-white-50">Node.js | Telegram API | Cloud</small>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>Deployed Node.js app on Render supporting multiple file formats.</li>
+                                <li>Integrated Telegram Bot API for automated, unlimited cloud backup.</li>
+                                <li>Implemented dynamic storage with automated cleanup mechanisms.</li>
+                                <li>Achieved 100% file transmission success rate.</li>
+                            </ul>
+                            <div class="mt-4">
+                                <a href="https://github.com/asmith0713/Image-Uploader" target="_blank" class="btn btn-project">
+                                    <i class="fab fa-github me-2"></i>GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 fade-in">
+                    <div class="custom-card project-card h-100 p-0">
+                        <div class="project-header">
+                            <h3 class="h4 mb-1">ParkEase</h3>
+                            <small class="text-white-50">JavaScript | HTML5 | CSS3</small>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>Created responsive parking management web application.</li>
+                                <li>Implemented dynamic pricing algorithm boosting efficiency by 40%.</li>
+                                <li>Built interactive lot visualization with live status updates.</li>
+                                <li>Developed notification system for user alerts.</li>
+                            </ul>
+                            <div class="mt-4">
+                                <a href="https://github.com/asmith0713/ParkingSlotBooking" target="_blank" class="btn btn-project">
+                                    <i class="fab fa-github me-2"></i>GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title fade-in">Experience & Education</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="experience-item fade-in">
+                        <div class="d-flex justify-content-between flex-wrap mb-2">
+                            <h3 class="h4" style="color: var(--accent);">B.Tech - Computer Science</h3>
+                            <span class="text-secondary fst-italic">Dec 2022 - Present</span>
+                        </div>
+                        <p class="text-white mb-1">Keshav Memorial Institute of Technology, Hyderabad</p>
+                        <p class="text-secondary">CGPA: 7.5/10.0</p>
+                        <p class="text-secondary small">Coursework: Data Structures & Algorithms, OOP, DBMS, Cloud Computing, Operating Systems, Computer Networks</p>
+                    </div>
+
+                    <div class="experience-item fade-in">
+                        <div class="d-flex justify-content-between flex-wrap mb-2">
+                            <h3 class="h4" style="color: var(--accent);">OCI 2025 Certified DevOps Professional</h3>
+                            <span class="text-secondary fst-italic">Oct 2025</span>
+                        </div>
+                        <p class="text-secondary">Industry certification validating expertise in cloud DevOps, CI/CD pipelines, and infrastructure automation.</p>
+                    </div>
+
+                    <div class="experience-item fade-in">
+                        <div class="d-flex justify-content-between flex-wrap mb-2">
+                            <h3 class="h4" style="color: var(--accent);">KMIT Project School Selection</h3>
+                        </div>
+                        <p class="text-secondary">Selected among top 30% of students for advanced project training and research in software development.</p>
+                    </div>
+
+                    <div class="experience-item fade-in">
+                        <div class="d-flex justify-content-between flex-wrap mb-2">
+                            <h3 class="h4" style="color: var(--accent);">Problem Solving</h3>
+                        </div>
+                        <p class="text-secondary">Solved 150+ problems across LeetCode and HackerRank with an 85% success rate in Data Structures & Algorithms.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container text-center">
+            <h2 class="section-title fade-in">Get In Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 fade-in">
+                    <p class="lead text-secondary mb-5">
+                        I'm currently looking for internship and full-time opportunities. Whether you have a question or just want to say hi, feel free to reach out!
+                    </p>
+                    <div class="d-flex flex-column align-items-center gap-3">
+                        <a href="mailto:asmithreddy2004@gmail.com" class="contact-card w-100 mw-500 mx-auto" style="max-width: 500px;">
+                            <i class="fas fa-envelope fa-lg"></i>
+                            <span>asmithreddy2004@gmail.com</span>
+                        </a>
+                        <a href="tel:+918328405377" class="contact-card w-100 mw-500 mx-auto" style="max-width: 500px;">
+                            <i class="fas fa-phone fa-lg"></i>
+                            <span>+91-8328405377</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/asmithreddy0713" target="_blank" class="contact-card w-100 mw-500 mx-auto" style="max-width: 500px;">
+                            <i class="fab fa-linkedin-in fa-lg"></i>
+                            <span>linkedin.com/in/asmithreddy0713</span>
+                        </a>
+                    </div>
+                    <p class="mt-4 text-secondary"><i class="fas fa-map-marker-alt me-2"></i>Hyderabad, Telangana, India</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-4 text-center">
+        <div class="container">
+            <p class="mb-0 text-secondary">Designed & Built by Asmith Maramreddy</p>
+            <small class="text-secondary opacity-75">© 2025 All rights reserved</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Fade-in animation on scroll using Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Close mobile navbar on link click
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navbarCollapse = document.getElementById('navbarNav');
+                if (navbarCollapse.classList.contains('show')) {
+                    new bootstrap.Collapse(navbarCollapse).hide();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
